@@ -1,0 +1,5 @@
+echo \ >> ~/status.log
+echo \ >> ~/status.log
+date >> ~/status.log
+printf 'onlock - ' >> ~/status.log
+curl -s  >> ~/status.log
