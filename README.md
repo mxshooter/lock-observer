@@ -4,15 +4,15 @@ A tiny Swift program to run a command whenever the screen locks or unlocks \
 (I use it for set my status offline or online at simple webpage)
 
 ```sh
-# run-on-macos-screen-unlock <command-to-run-on-unlock> [command-args]
-run-on-macos-screen-unlock ./examples/mount-network-shares.sh
+# lock-observer [OPTIONS] <onlock_command> <onunlock_command>
+lock-observer ./onlock ./onunlock
 ```
 
 ```sh
 # add to launchctl (start on login)
 serviceman add --user \
     --path "$PATH" \
-    ./run-on-macos-screen-unlock ./examples/mount-network-shares.sh
+    ./lock-observer ./examples/mount-network-shares.sh
 ```
 
 # Table of Contents
@@ -28,26 +28,26 @@ serviceman add --user \
 
 # Acknowledgement
 
-Forked from [coolaj86/run-on-macos-screen-unlock](https://github.com/coolaj86/run-on-macos-screen-unlock).
+Forked from [coolaj86/lock-observer](https://github.com/coolaj86/lock-observer).
 Another more professional fork [smartwatermelon/run-on-macos-screen-events](https://github.com/smartwatermelon/run-on-macos-screen-events).
 
 # Install
 
 1. Download
    ```sh
-   curl --fail-with-body -L -O https://github.com/coolaj86/run-on-macos-screen-unlock/releases/download/v1.0.0/run-on-macos-screen-unlock-v1.0.0.tar.gz
+   curl --fail-with-body -L -O https://github.com/coolaj86/lock-observer/releases/download/v1.0.0/lock-observer-v1.0.0.tar.gz
    ```
 2. Extract
    ```sh
-   tar xvf ./run-on-macos-screen-unlock-v1.0.0.tar.gz
+   tar xvf ./lock-observer-v1.0.0.tar.gz
    ```
 3. Allow running even though it's unsigned
    ```sh
-   xattr -r -d com.apple.quarantine ./run-on-macos-screen-unlock
+   xattr -r -d com.apple.quarantine ./lock-observer
    ```
 4. Move into your `PATH`
    ```sh
-   mv ./run-on-macos-screen-unlock ~/bin/
+   mv ./lock-observer ~/bin/
    ```
 
 # Run on Login
@@ -71,14 +71,14 @@ You'll see notifications similar to these when adding launchctl services yoursel
    ```sh
    serviceman add --user \
        --path "$PATH" \
-       ~/bin/run-on-macos-screen-unlock COMMAND_GOES_HERE
+       ~/bin/lock-observer COMMAND_GOES_HERE
    ```
 
 ## With a plist template
 
 1. Download the template plist file
    ```sh
-   curl --fail-with-body -L -O https://raw.githubusercontent.com/coolaj86/run-on-macos-screen-unlock/main/examples/run-on-macos-screen-unlock.COMMAND_LABEL_GOES_HERE.plist
+   curl --fail-with-body -L -O https://raw.githubusercontent.com/coolaj86/lock-observer/main/examples/lock-observer.COMMAND_LABEL_GOES_HERE.plist
    ```
 2. Change the template variables to what you need:
 
@@ -88,18 +88,18 @@ You'll see notifications similar to these when adding launchctl services yoursel
 
 3. Rename and move the file to `~/Library/LaunchDaemons/`
    ```sh
-   mv ./run-on-macos-screen-unlock.COMMAND_LABEL_GOES_HERE.plist ./run-on-macos-screen-unlock.example-label.plist
-   mv ./run-on-macos-screen-unlock.*.plist ~/Library/LaunchDaemons/
+   mv ./lock-observer.COMMAND_LABEL_GOES_HERE.plist ./lock-observer.example-label.plist
+   mv ./lock-observer.*.plist ~/Library/LaunchDaemons/
    ```
 4. Register using `launchctl`
    ```sh
-   launchctl load -w ~/Library/LaunchAgents/run-on-macos-screen-unlock.*.plist
+   launchctl load -w ~/Library/LaunchAgents/lock-observer.*.plist
    ```
 
 ## View logs
 
 ```sh
-tail -f ~/.local/share/run-on-macos-screen-unlock.*/var/log/run-on-macos-screen-unlock.*.log
+tail -f ~/.local/share/lock-observer.*/var/log/lock-observer.*.log
 ```
 
 # Build from Source
@@ -111,12 +111,12 @@ tail -f ~/.local/share/run-on-macos-screen-unlock.*/var/log/run-on-macos-screen-
    ```
 2. Clone and enter the repo
    ```sh
-   git clone https://github.com/coolaj86/run-on-macos-screen-unlock.git
-   pushd ./run-on-macos-screen-unlock/
+   git clone https://github.com/coolaj86/lock-observer.git
+   pushd ./lock-observer/
    ```
 3. Build with `swiftc`
    ```sh
-   swiftc ./run-on-macos-screen-unlock.swift
+   swiftc ./lock-observer.swift
    ```
 
 # Publish Release
@@ -127,11 +127,11 @@ tail -f ~/.local/share/run-on-macos-screen-unlock.*/var/log/run-on-macos-screen-
    git push --tags
    ```
 2. Create a release \
-   <https://github.com/coolaj86/run-on-macos-screen-unlock/releases/new>
+   <https://github.com/coolaj86/lock-observer/releases/new>
 3. Tar and upload
    ```sh
-   tar cvf ./run-on-macos-screen-unlock-v1.0.x.tar ./run-on-macos-screen-unlock
-   gzip ./run-on-macos-screen-unlock-v1.0.x.tar
+   tar cvf ./lock-observer-v1.0.x.tar ./lock-observer
+   gzip ./lock-observer-v1.0.x.tar
    open .
    ```
 
